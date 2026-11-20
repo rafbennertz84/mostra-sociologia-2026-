@@ -13451,6 +13451,9 @@ select, input[type="text"], input[type="password"], textarea {
                         <button type="button" onclick="exportarNotasDocentesCSV()" style="background: #059669; color: white; border: none; font-weight: 700; font-size: 0.82rem; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;">
                             📥 Exportar Planilha de Notas (Excel / CSV)
                         </button>
+                        <button type="button" onclick="abrirModalEditarDisciplinasProfessor()" title="Selecionar ou alterar as disciplinas pelas quais você é responsável" style="background: #ffffff; color: #1e3a8a; border: 1.5px solid #93c5fd; font-weight: 700; font-size: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            ✏️ Minhas Disciplinas
+                        </button>
                         <button type="button" onclick="limparDadosLocaisTeste()" title="Apaga apenas as avaliações e respostas de pré-teste salvas neste navegador" style="background: #ffffff; color: #b91c1c; border: 1.5px solid #fca5a5; font-weight: 700; font-size: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;">
                             🧹 Limpar Testes Locais
                         </button>
@@ -14578,9 +14581,29 @@ select, input[type="text"], input[type="password"], textarea {
         function abrirModalConfirmarProfessor(nome) {
             const elNome = document.getElementById('modalGoogleNomeProfessor');
             const modal = document.getElementById('modalConfirmarProfessorGoogle');
-            if (elNome) elNome.innerText = nome;
+            if (elNome) elNome.innerText = nome || (currentUserProfile ? currentUserProfile.nome : '-');
+
+            // Pré-preenche disciplinas já salvas (caso o professor esteja editando)
+            const salvas = String((currentUserProfile && currentUserProfile.disciplina) || '')
+                .split(/[;,\n]/).map(s => s.trim()).filter(Boolean);
+            const checks = Array.from(document.querySelectorAll('.chk-disciplina-prof'));
+            const valoresPadrao = checks.map(c => c.value.toLowerCase());
+            checks.forEach(c => {
+                c.checked = salvas.some(s => s.toLowerCase() === c.value.toLowerCase());
+            });
+            const extras = salvas.filter(s => !valoresPadrao.includes(s.toLowerCase()));
+            const inpExtras = document.getElementById('inputOutrasDisciplinasProf');
+            if (inpExtras) inpExtras.value = extras.join('; ');
+
             if (modal) modal.style.display = 'flex';
         }
+        window.abrirModalEditarDisciplinasProfessor = function () {
+            if (!currentUserProfile || currentUserProfile.papel !== 'professor') {
+                mostrarNotificacao("⚠️ Faça login com sua conta docente (@educar.rs.gov.br) para editar suas disciplinas.", "aviso");
+                return;
+            }
+            abrirModalConfirmarProfessor(currentUserProfile.nome);
+        };
 
         function confirmarDisciplinaGoogleProfessor() {
             const marcadas = Array.from(document.querySelectorAll('.chk-disciplina-prof:checked')).map(c => c.value);
