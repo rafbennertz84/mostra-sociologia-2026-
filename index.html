@@ -13752,6 +13752,9 @@ select, input[type="text"], input[type="password"], textarea {
                         </p>
                     </div>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" onclick="recarregarAuditoriaDaNuvem()" style="background: #1e3a8a; color: white; border: none; font-weight: 700; font-size: 0.8rem; padding: 0.55rem 0.9rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            🔄 Atualizar da Nuvem
+                        </button>
                         <button type="button" onclick="exportarTodasAvaliacoesDiscentesCSV()" style="background: #0284c7; color: white; border: none; font-weight: 700; font-size: 0.8rem; padding: 0.55rem 0.9rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;">
                             📊 Exportar Avaliações Discentes (CSV)
                         </button>
@@ -13769,7 +13772,7 @@ select, input[type="text"], input[type="password"], textarea {
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; text-align: center;">
                         <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 700;">Estudantes com Meta 8 Atingida</div>
-                        <div id="metricAuditEstudantesMeta10" style="font-size: 1.8rem; font-weight: 800; color: #16a34a; margin-top: 0.2rem;">0 / 96</div>
+                        <div id="metricAuditEstudantesMeta10" style="font-size: 1.8rem; font-weight: 800; color: #16a34a; margin-top: 0.2rem;">0 / 0</div>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; text-align: center;">
                         <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 700;">Bancadas Cadastradas</div>
@@ -13833,33 +13836,61 @@ select, input[type="text"], input[type="password"], textarea {
 
                 <!-- ABA 2: Auditoria por Estudante Avaliador (Quais projetos avaliou cada aluno?) -->
                 <div id="abaAuditEstudante" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem; background: #f8fafc; padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 0.85rem; background: #f8fafc; padding: 0.85rem 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
                         <div style="display: flex; gap: 0.8rem; flex: 1; flex-wrap: wrap;">
-                            <div style="width: 200px;">
-                                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #334155; margin-bottom: 0.25rem;">Filtrar Turma:</label>
-                                <select id="filtroAuditTurmaEstudante" onchange="renderizarAuditoriaPorEstudante()" style="width: 100%; padding: 0.55rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; outline: none; background: white;">
-                                    <option value="">Todas as Turmas (96 Estudantes)</option>
-                                    <option value="Turma 101 (Manhã)">Turma 101 (Manhã)</option>
-                                    <option value="Turma 102 (Manhã)">Turma 102 (Manhã)</option>
-                                    <option value="Turma 201 (Tarde)">Turma 201 (Tarde)</option>
-                                    <option value="Turma 202 (Tarde)">Turma 202 (Tarde)</option>
-                                    <option value="Turma 301 (Noite)">Turma 301 (Noite)</option>
-                                    <option value="Turma 302 (Noite)">Turma 302 (Noite)</option>
+                            <div style="min-width: 230px; flex: 0 1 260px;">
+                                <label for="filtroAuditTurmaEstudante" style="display: block; font-size: 0.75rem; font-weight: 700; color: #334155; margin-bottom: 0.25rem;">Filtrar Turma (Todas as 24 Turmas):</label>
+                                <select id="filtroAuditTurmaEstudante" onchange="renderizarAuditoriaPorEstudante()" style="width: 100%; padding: 0.55rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.84rem; outline: none; background: white;">
+                                    <option value="">Todas as 24 Turmas</option>
+                                    <option value="101">Turma 101 (1º Ano • Manhã)</option>
+                                    <option value="102">Turma 102 (1º Ano • Manhã)</option>
+                                    <option value="103">Turma 103 (1º Ano • Manhã)</option>
+                                    <option value="104">Turma 104 (1º Ano • Manhã)</option>
+                                    <option value="105">Turma 105 (1º Ano • Tarde)</option>
+                                    <option value="106">Turma 106 (1º Ano • Tarde)</option>
+                                    <option value="107">Turma 107 (1º Ano • Noite)</option>
+                                    <option value="108">Turma 108 (1º Ano • Noite)</option>
+                                    <option value="201">Turma 201 (2º Ano • Manhã)</option>
+                                    <option value="202">Turma 202 (2º Ano • Manhã)</option>
+                                    <option value="203">Turma 203 (2º Ano • Manhã)</option>
+                                    <option value="204">Turma 204 (2º Ano • Tarde)</option>
+                                    <option value="205">Turma 205 (2º Ano • Tarde)</option>
+                                    <option value="206">Turma 206 (2º Ano • Tarde)</option>
+                                    <option value="207">Turma 207 (2º Ano • Noite)</option>
+                                    <option value="208">Turma 208 (2º Ano • Noite)</option>
+                                    <option value="301">Turma 301 (3º Ano • Manhã)</option>
+                                    <option value="302">Turma 302 (3º Ano • Manhã)</option>
+                                    <option value="303">Turma 303 (3º Ano • Manhã)</option>
+                                    <option value="304">Turma 304 (3º Ano • Tarde)</option>
+                                    <option value="305">Turma 305 (3º Ano • Tarde)</option>
+                                    <option value="306">Turma 306 (3º Ano • Tarde)</option>
+                                    <option value="307">Turma 307 (3º Ano • Noite)</option>
+                                    <option value="308">Turma 308 (3º Ano • Noite)</option>
+                                </select>
+                            </div>
+                            <div style="min-width: 190px; flex: 0 1 220px;">
+                                <label for="filtroAuditStatusMeta" style="display: block; font-size: 0.75rem; font-weight: 700; color: #334155; margin-bottom: 0.25rem;">Filtrar Situação:</label>
+                                <select id="filtroAuditStatusMeta" onchange="renderizarAuditoriaPorEstudante()" style="width: 100%; padding: 0.55rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.84rem; outline: none; background: white;">
+                                    <option value="todos">Todos os Estudantes</option>
+                                    <option value="ativos">Já registraram avaliações (≥ 1)</option>
+                                    <option value="concluida">Meta concluída (≥ 8)</option>
+                                    <option value="pendente">Ainda pendentes (&lt; 8)</option>
                                 </select>
                             </div>
                             <div style="flex: 1; min-width: 220px;">
-                                <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #334155; margin-bottom: 0.25rem;">Buscar Estudante por Nome:</label>
-                                <input type="text" id="buscaAuditNomeEstudante" oninput="renderizarAuditoriaPorEstudante()" placeholder="Digite o nome do estudante..." style="width: 100%; padding: 0.55rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; outline: none;">
+                                <label for="buscaAuditNomeEstudante" style="display: block; font-size: 0.75rem; font-weight: 700; color: #334155; margin-bottom: 0.25rem;">Buscar Estudante por Nome ou Turma:</label>
+                                <input type="text" id="buscaAuditNomeEstudante" oninput="renderizarAuditoriaPorEstudante()" placeholder="Digite o nome ou número da turma..." style="width: 100%; padding: 0.55rem; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; outline: none;">
                             </div>
                         </div>
                     </div>
+                    <div id="resumoAuditEstudanteCard" style="font-size: 0.8rem; color: #1e3a8a; font-weight: 600; margin-bottom: 0.65rem;"></div>
 
                     <div style="overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 6px;">
                         <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left; background: white;">
                             <thead>
                                 <tr style="background: #f1f5f9; color: #1e293b; border-bottom: 2px solid #cbd5e1;">
                                     <th style="padding: 0.55rem 0.7rem;">Turma</th>
-                                    <th style="padding: 0.55rem 0.7rem;">Estudante Cadastrado</th>
+                                    <th style="padding: 0.55rem 0.7rem;">Estudante</th>
                                     <th style="padding: 0.55rem 0.7rem;">Bancada Própria</th>
                                     <th style="padding: 0.55rem 0.7rem;">Total Avaliados</th>
                                     <th style="padding: 0.55rem 0.7rem;">Status da Meta (Mín. 8)</th>
@@ -13868,7 +13899,7 @@ select, input[type="text"], input[type="password"], textarea {
                                 </tr>
                             </thead>
                             <tbody id="corpoTabelaAuditEstudante">
-                                <!-- Preenchido dinamicamente com os 96 estudantes -->
+                                <!-- Preenchido dinamicamente com todos os estudantes e todas as 24 turmas -->
                             </tbody>
                         </table>
                     </div>
@@ -15284,6 +15315,7 @@ select, input[type="text"], input[type="password"], textarea {
                     } catch (eS) {
                         console.warn("Sync Firestore simulado_enem:", eS);
                     }
+                    if (typeof renderizarAuditoriaDiscente === 'function') renderizarAuditoriaDiscente();
                 } else {
                     // Estudante: carrega apenas as próprias avaliações registradas no Firestore
                     const snapMinhas = await fbDb.collection('avaliacoes_discentes').where('avaliadorUid', '==', perfil.uid).get();
@@ -18454,13 +18486,48 @@ select, input[type="text"], input[type="password"], textarea {
   },
   {
     "cod": "TRAB-21",
-    "turma": "Turmas: 204, 207, 302",
+    "turma": "Turmas: 106, 204, 207, 302",
     "eixoNum": 6,
     "eixoNome": "Eixo 6: Democracia, Cidadania e Estrutura Institucional",
     "opcaoNum": 21,
     "opcaoTitulo": "Soberania Popular e Sufrágio Universal: Da Fraude Colonial às Urnas Auditáveis",
     "tema": "Opção 21: Soberania Popular e Sufrágio Universal: Da Fraude Colonial às Urnas Auditáveis",
     "colegas": [
+      {
+        "nome": "Henrique Maurente Araújo",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Vítor Gonçalves Scheffer",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Júlia Vitória Medeiros Linder",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Samara Marina dos Santos Paim de Melo",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Monique Sponchiado de Aguiar da Silva",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Murilo Queiroz Costa",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
+      {
+        "nome": "Lisse Ohanne Oliveira de França",
+        "papel": "",
+        "turmaOrigem": "106"
+      },
       {
         "nome": "Rafaela Maldonado Rossatto Teixeira",
         "papel": "",
@@ -18525,7 +18592,7 @@ select, input[type="text"], input[type="password"], textarea {
   },
   {
     "cod": "TRAB-22",
-    "turma": "Turmas: 103, 104, 106, 205, 305",
+    "turma": "Turmas: 103, 104, 205, 305",
     "eixoNum": 6,
     "eixoNome": "Eixo 6: Democracia, Cidadania e Estrutura Institucional",
     "opcaoNum": 22,
@@ -18581,41 +18648,6 @@ select, input[type="text"], input[type="password"], textarea {
         "nome": "Vinicius Alves da Rosa",
         "papel": "",
         "turmaOrigem": "305"
-      },
-      {
-        "nome": "Vítor Gonçalves Scheffer",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Henrique Maurente Araujo",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Samara Marina dos Santos Paim de Melo",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Monique Sponchiado de Aguiar da Silva",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Lisse Ohanne Oliveira de França",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Murilo Queiroz Costa",
-        "papel": "",
-        "turmaOrigem": "106"
-      },
-      {
-        "nome": "Júlia Vitória Medeiros Linder",
-        "papel": "",
-        "turmaOrigem": "106"
       },
       {
         "nome": "Valerith Valentina Carvajal Peraza",
@@ -22009,20 +22041,195 @@ window.DADOS_TRABALHOS = DADOS_TRABALHOS;
             if (valAtual && sel.querySelector(`option[value="${valAtual}"]`)) {
                 sel.value = valAtual;
             }
+            sel.dataset.populado = "1";
         }
+
+        const TURMAS_OFICIAIS_MARGOT = [
+            { cod: "101", label: "Turma 101 (1º Ano • Manhã)" },
+            { cod: "102", label: "Turma 102 (1º Ano • Manhã)" },
+            { cod: "103", label: "Turma 103 (1º Ano • Manhã)" },
+            { cod: "104", label: "Turma 104 (1º Ano • Manhã)" },
+            { cod: "105", label: "Turma 105 (1º Ano • Tarde)" },
+            { cod: "106", label: "Turma 106 (1º Ano • Tarde)" },
+            { cod: "107", label: "Turma 107 (1º Ano • Noite)" },
+            { cod: "108", label: "Turma 108 (1º Ano • Noite)" },
+            { cod: "201", label: "Turma 201 (2º Ano • Manhã)" },
+            { cod: "202", label: "Turma 202 (2º Ano • Manhã)" },
+            { cod: "203", label: "Turma 203 (2º Ano • Manhã)" },
+            { cod: "204", label: "Turma 204 (2º Ano • Tarde)" },
+            { cod: "205", label: "Turma 205 (2º Ano • Tarde)" },
+            { cod: "206", label: "Turma 206 (2º Ano • Tarde)" },
+            { cod: "207", label: "Turma 207 (2º Ano • Noite)" },
+            { cod: "208", label: "Turma 208 (2º Ano • Noite)" },
+            { cod: "301", label: "Turma 301 (3º Ano • Manhã)" },
+            { cod: "302", label: "Turma 302 (3º Ano • Manhã)" },
+            { cod: "303", label: "Turma 303 (3º Ano • Manhã)" },
+            { cod: "304", label: "Turma 304 (3º Ano • Tarde)" },
+            { cod: "305", label: "Turma 305 (3º Ano • Tarde)" },
+            { cod: "306", label: "Turma 306 (3º Ano • Tarde)" },
+            { cod: "307", label: "Turma 307 (3º Ano • Noite)" },
+            { cod: "308", label: "Turma 308 (3º Ano • Noite)" }
+        ];
+
+        function normTextoAudit(str) {
+            return String(str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+        }
+
+        function extrairCodTurmaAudit(turmaStr) {
+            const m = String(turmaStr || "").match(/\b(10[1-8]|20[1-8]|30[1-8])\b/);
+            return m ? m[1] : String(turmaStr || "").replace(/\D/g, "").slice(0, 3);
+        }
+
+        function formatarTurmaAudit(turmaStr) {
+            const cod = extrairCodTurmaAudit(turmaStr);
+            const raw = String(turmaStr || "").trim();
+            if (!cod) return raw || "Sem Turma";
+            if (/grupo\s*[ab]/i.test(raw)) {
+                const grp = raw.match(/grupo\s*[ab]/i)[0];
+                return `Turma ${cod} (${grp})`;
+            }
+            return `Turma ${cod}`;
+        }
+
+        function nomesBatemAudit(nomeA, nomeB, turmaA, turmaB) {
+            const a = normTextoAudit(nomeA);
+            const b = normTextoAudit(nomeB);
+            if (!a || !b) return false;
+            if (a === b) return true;
+            const codA = extrairCodTurmaAudit(turmaA);
+            const codB = extrairCodTurmaAudit(turmaB);
+            if (codA && codB && codA !== codB) return false;
+            const pa = a.split(" ");
+            const pb = b.split(" ");
+            return pa.length >= 2 && pb.length >= 2 && pa[0] === pb[0] && pa[pa.length - 1] === pb[pb.length - 1];
+        }
+
+        function obterTodosEstudantesParaAuditoria() {
+            const base = obterTodosEstudantesMargot().map(a => ({
+                nome: a.nome,
+                papel: a.papel || "Expositor(a)",
+                turma: formatarTurmaAudit(a.turma),
+                turmaCod: extrairCodTurmaAudit(a.turma),
+                turmaRaw: a.turma || "",
+                meuTrabalhoCod: a.meuTrabalhoCod || "-",
+                meuTrabalhoTema: a.meuTrabalhoTema || "-",
+                apresentando: true
+            }));
+
+            const adicionarExtra = (nome, turma) => {
+                const nm = String(nome || "").trim();
+                if (!nm || nm.length < 2) return;
+                const codT = extrairCodTurmaAudit(turma);
+                const jaExiste = base.some(item => nomesBatemAudit(item.nome, nm, item.turmaCod, codT));
+                if (jaExiste) return;
+                base.push({
+                    nome: nm,
+                    papel: "Avaliador(a) sem apresentação",
+                    turma: formatarTurmaAudit(turma),
+                    turmaCod: codT,
+                    turmaRaw: turma || "",
+                    meuTrabalhoCod: "SEM-BANCADA",
+                    meuTrabalhoTema: "Estudante ativo avaliando bancadas (sem grupo expositor vinculado)",
+                    apresentando: false
+                });
+            };
+
+            const usuariosCache = window.usuariosFirestoreCache || {};
+            Object.values(usuariosCache).forEach(u => {
+                if (u && u.papel === "estudante" && u.nome) {
+                    adicionarExtra(u.nome, u.turma);
+                }
+            });
+
+            avaliacoesBancaDiscentes.forEach(av => {
+                if (av && av.avaliadorNome) {
+                    adicionarExtra(av.avaliadorNome, av.avaliadorTurma);
+                }
+            });
+
+            if (window.usuarioGoogleLogado && window.usuarioGoogleLogado.papel === "estudante" && window.usuarioGoogleLogado.nome) {
+                adicionarExtra(window.usuarioGoogleLogado.nome, window.usuarioGoogleLogado.turma);
+            }
+
+            base.sort((a, b) => {
+                const ta = a.turmaCod || "999";
+                const tb = b.turmaCod || "999";
+                if (ta !== tb) return ta.localeCompare(tb);
+                return a.nome.localeCompare(b.nome, "pt-BR");
+            });
+
+            return base;
+        }
+
+        function obterAvaliacoesDoEstudanteAudit(aluno) {
+            return avaliacoesBancaDiscentes.filter(av =>
+                nomesBatemAudit(av.avaliadorNome, aluno.nome, av.avaliadorTurma, aluno.turmaCod)
+            );
+        }
+
+        function popularSelectFiltroAuditoriaTurma(todosAlunos) {
+            const sel = document.getElementById("filtroAuditTurmaEstudante");
+            if (!sel) return;
+
+            const lista = Array.isArray(todosAlunos) ? todosAlunos : obterTodosEstudantesParaAuditoria();
+            const valAtual = sel.value;
+
+            const contagemPorCod = {};
+            let semTurmaCount = 0;
+            lista.forEach(a => {
+                if (a.turmaCod) {
+                    contagemPorCod[a.turmaCod] = (contagemPorCod[a.turmaCod] || 0) + 1;
+                } else {
+                    semTurmaCount++;
+                }
+            });
+
+            sel.innerHTML = "";
+            const optAll = document.createElement("option");
+            optAll.value = "";
+            optAll.textContent = `Todas as 24 Turmas (${lista.length} estudantes)`;
+            sel.appendChild(optAll);
+
+            TURMAS_OFICIAIS_MARGOT.forEach(t => {
+                const qtd = contagemPorCod[t.cod] || 0;
+                const opt = document.createElement("option");
+                opt.value = t.cod;
+                opt.textContent = `${t.label} — ${qtd} aluno${qtd === 1 ? '' : 's'}`;
+                sel.appendChild(opt);
+            });
+
+            if (semTurmaCount > 0) {
+                const optSem = document.createElement("option");
+                optSem.value = "__SEM_TURMA__";
+                optSem.textContent = `Sem turma informada (${semTurmaCount})`;
+                sel.appendChild(optSem);
+            }
+
+            if (valAtual && sel.querySelector(`option[value="${valAtual}"]`)) {
+                sel.value = valAtual;
+            }
+            sel.dataset.populado = "1";
+        }
+
+        window.recarregarAuditoriaDaNuvem = async function() {
+            if (typeof sincronizarDadosDoFirestorePorPerfil === "function" && window.usuarioGoogleLogado) {
+                mostrarNotificacao("🔄 Atualizando avaliações e estudantes da nuvem...", "aviso");
+                await sincronizarDadosDoFirestorePorPerfil(window.usuarioGoogleLogado);
+                renderizarAuditoriaDiscente();
+                if (typeof renderizarTabelaBancaDocente === "function") renderizarTabelaBancaDocente();
+                mostrarNotificacao("✅ Painel de auditoria atualizado com os registros mais recentes da nuvem!", "sucesso");
+            } else {
+                renderizarAuditoriaDiscente();
+            }
+        };
 
         function renderizarAuditoriaDiscente() {
             const totalAvaliacoes = avaliacoesBancaDiscentes.length;
             const metricTotal = document.getElementById("metricAuditTotalAvaliacoes");
             if (metricTotal) metricTotal.textContent = totalAvaliacoes;
 
-            const todosAlunos = obterTodosEstudantesMargot();
-            const contagemPorAluno = {};
-            avaliacoesBancaDiscentes.forEach(av => {
-                contagemPorAluno[av.avaliadorNome] = (contagemPorAluno[av.avaliadorNome] || 0) + 1;
-            });
-
-            const atingiram8 = todosAlunos.filter(a => (contagemPorAluno[a.nome] || 0) >= 8).length;
+            const todosAlunos = obterTodosEstudantesParaAuditoria();
+            const atingiram8 = todosAlunos.filter(a => obterAvaliacoesDoEstudanteAudit(a).length >= 8).length;
             const metricMeta = document.getElementById("metricAuditEstudantesMeta10");
             if (metricMeta) metricMeta.textContent = `${atingiram8} / ${todosAlunos.length}`;
 
@@ -22037,8 +22244,9 @@ window.DADOS_TRABALHOS = DADOS_TRABALHOS;
             }
 
             popularSelectFiltroAuditoriaProjeto();
+            popularSelectFiltroAuditoriaTurma(todosAlunos);
             renderizarAuditoriaPorProjeto();
-            renderizarAuditoriaPorEstudante();
+            renderizarAuditoriaPorEstudante(todosAlunos);
         }
 
         function popularSelectFiltroAuditoriaProjeto() {
@@ -22098,51 +22306,92 @@ window.DADOS_TRABALHOS = DADOS_TRABALHOS;
             }).join("");
         }
 
-        function renderizarAuditoriaPorEstudante() {
+        function renderizarAuditoriaPorEstudante(listaBaseOpcional) {
             const selTurma = document.getElementById("filtroAuditTurmaEstudante");
+            const selStatus = document.getElementById("filtroAuditStatusMeta");
             const inpBusca = document.getElementById("buscaAuditNomeEstudante");
+            const resumoEl = document.getElementById("resumoAuditEstudanteCard");
             const corpo = document.getElementById("corpoTabelaAuditEstudante");
             if (!corpo) return;
 
+            const baseCompleta = Array.isArray(listaBaseOpcional) ? listaBaseOpcional : obterTodosEstudantesParaAuditoria();
+            if (selTurma && selTurma.dataset.populado !== "1") {
+                popularSelectFiltroAuditoriaTurma(baseCompleta);
+            }
+
             const turmaFiltro = selTurma ? selTurma.value.trim() : "";
-            const buscaTexto = inpBusca ? inpBusca.value.toLowerCase().trim() : "";
+            const statusFiltro = selStatus ? selStatus.value : "todos";
+            const buscaNorm = normTextoAudit(inpBusca ? inpBusca.value : "");
 
-            let todosAlunos = obterTodosEstudantesMargot();
-            if (turmaFiltro) {
-                todosAlunos = todosAlunos.filter(a => a.turma === turmaFiltro);
-            }
-            if (buscaTexto) {
-                todosAlunos = todosAlunos.filter(a => a.nome.toLowerCase().includes(buscaTexto));
+            let filtrados = baseCompleta.map(aluno => {
+                const avaliacoesDoAluno = obterAvaliacoesDoEstudanteAudit(aluno);
+                return { aluno, avaliacoesDoAluno, total: avaliacoesDoAluno.length };
+            });
+
+            if (turmaFiltro === "__SEM_TURMA__") {
+                filtrados = filtrados.filter(x => !x.aluno.turmaCod);
+            } else if (turmaFiltro) {
+                const codAlvo = extrairCodTurmaAudit(turmaFiltro);
+                filtrados = filtrados.filter(x => x.aluno.turmaCod === codAlvo || x.aluno.turma === turmaFiltro);
             }
 
-            if (todosAlunos.length === 0) {
+            if (statusFiltro === "ativos") {
+                filtrados = filtrados.filter(x => x.total >= 1);
+            } else if (statusFiltro === "concluida") {
+                filtrados = filtrados.filter(x => x.total >= 8);
+            } else if (statusFiltro === "pendente") {
+                filtrados = filtrados.filter(x => x.total < 8);
+            }
+
+            if (buscaNorm) {
+                filtrados = filtrados.filter(x =>
+                    normTextoAudit(x.aluno.nome).includes(buscaNorm) ||
+                    normTextoAudit(x.aluno.turma).includes(buscaNorm) ||
+                    normTextoAudit(x.aluno.meuTrabalhoCod).includes(buscaNorm)
+                );
+            }
+
+            if (resumoEl) {
+                const jaAvaliaram = filtrados.filter(x => x.total > 0).length;
+                const concluidos = filtrados.filter(x => x.total >= 8).length;
+                resumoEl.innerHTML = `Exibindo <strong>${filtrados.length}</strong> de <strong>${baseCompleta.length}</strong> estudantes (todas as 24 turmas + avaliadores sem apresentação) • <span style="color:#0369a1;">${jaAvaliaram} já registraram avaliações</span> • <span style="color:#15803d;">${concluidos} concluíram a meta de 8</span>`;
+            }
+
+            if (filtrados.length === 0) {
                 corpo.innerHTML = `<tr><td colspan="7" style="padding: 1.2rem; text-align: center; color: #64748b; font-style: italic;">Nenhum estudante encontrado com os filtros selecionados.</td></tr>`;
                 return;
             }
 
-            corpo.innerHTML = todosAlunos.map(aluno => {
-                const avaliacoesDoAluno = avaliacoesBancaDiscentes.filter(av => av.avaliadorNome === aluno.nome);
-                const total = avaliacoesDoAluno.length;
+            const escAttr = s => String(s || "").replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+            const escHtml = s => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            corpo.innerHTML = filtrados.map(({ aluno, avaliacoesDoAluno, total }) => {
                 const atingiuMeta = total >= 8;
 
                 const badgeMeta = atingiuMeta
                     ? `<span style="background: #dcfce7; color: #15803d; font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 4px;">✓ Meta Concluída (${total}/8)</span>`
-                    : `<span style="background: #fef3c7; color: #92400e; font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 4px;">⏳ Pendente (${total}/8)</span>`;
+                    : (total > 0
+                        ? `<span style="background: #e0f2fe; color: #0369a1; font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 4px;">📝 Em andamento (${total}/8)</span>`
+                        : `<span style="background: #fef3c7; color: #92400e; font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 4px;">⏳ Pendente (0/8)</span>`);
 
-                const badgesProjetos = avaliacoesDoAluno.map(av => 
-                    `<span style="background: #eff6ff; color: #1d4ed8; font-weight: 700; font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 3px; margin: 1px; display: inline-block;">${av.projetoAvaliadoCod} (${av.mediaProjeto})</span>`
+                const badgesProjetos = avaliacoesDoAluno.map(av =>
+                    `<span style="background: #eff6ff; color: #1d4ed8; font-weight: 700; font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 3px; margin: 1px; display: inline-block;">${escHtml(av.projetoAvaliadoCod)} (${escHtml(av.mediaProjeto)})</span>`
                 ).join(" ") || `<em style="color: #94a3b8; font-size: 0.75rem;">Nenhum ainda</em>`;
+
+                const bancadaHtml = aluno.apresentando
+                    ? `<span style="color: #1e40af; font-weight: 600;">${escHtml(aluno.meuTrabalhoCod)}</span>`
+                    : `<span style="background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.4rem; border-radius: 4px;">Avaliador(a) ativo</span>`;
 
                 return `
                     <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 0.55rem 0.7rem; font-size: 0.8rem; color: #475569;">${aluno.turma}</td>
-                        <td style="padding: 0.55rem 0.7rem; font-weight: 700; color: #0f172a;">${aluno.nome}</td>
-                        <td style="padding: 0.55rem 0.7rem; font-size: 0.78rem; font-weight: 600; color: #1e40af;">${aluno.meuTrabalhoCod}</td>
+                        <td style="padding: 0.55rem 0.7rem; font-size: 0.8rem; color: #475569; white-space: nowrap;">${escHtml(aluno.turma)}</td>
+                        <td style="padding: 0.55rem 0.7rem; font-weight: 700; color: #0f172a;">${escHtml(aluno.nome)}</td>
+                        <td style="padding: 0.55rem 0.7rem; font-size: 0.78rem;">${bancadaHtml}</td>
                         <td style="padding: 0.55rem 0.7rem; font-weight: 700; text-align: center; font-size: 0.88rem;">${total}</td>
-                        <td style="padding: 0.55rem 0.7rem;">${badgeMeta}</td>
+                        <td style="padding: 0.55rem 0.7rem; white-space: nowrap;">${badgeMeta}</td>
                         <td style="padding: 0.55rem 0.7rem; max-width: 320px;">${badgesProjetos}</td>
                         <td style="padding: 0.55rem 0.7rem;">
-                            <button type="button" onclick="abrirModalDetalhesAlunoAudit('${aluno.nome.replace(/'/g, "\'")}')" style="background: #3b82f6; color: white; border: none; font-size: 0.74rem; font-weight: 600; padding: 0.35rem 0.65rem; border-radius: 4px; cursor: pointer;">
+                            <button type="button" onclick="abrirModalDetalhesAlunoAudit('${escAttr(aluno.nome)}', '${escAttr(aluno.turmaCod)}')" style="background: #3b82f6; color: white; border: none; font-size: 0.74rem; font-weight: 600; padding: 0.35rem 0.65rem; border-radius: 4px; cursor: pointer;">
                                 🔍 Detalhes
                             </button>
                         </td>
@@ -22151,18 +22400,25 @@ window.DADOS_TRABALHOS = DADOS_TRABALHOS;
             }).join("");
         }
 
-        function abrirModalDetalhesAlunoAudit(nomeAluno) {
+        function abrirModalDetalhesAlunoAudit(nomeAluno, turmaCodOpcional) {
             const modal = document.getElementById("modalDetalhesAlunoAudit");
             const tit = document.getElementById("modalAuditAlunoNomeTitulo");
             const subtit = document.getElementById("modalAuditAlunoSubtitulo");
             const corpo = document.getElementById("modalAuditAlunoCorpo");
             if (!modal || !corpo) return;
 
-            const cadastro = obterTodosEstudantesMargot().find(a => a.nome === nomeAluno);
-            const avaliacoes = avaliacoesBancaDiscentes.filter(av => av.avaliadorNome === nomeAluno);
+            const todos = obterTodosEstudantesParaAuditoria();
+            const cadastro = todos.find(a => nomesBatemAudit(a.nome, nomeAluno, a.turmaCod, turmaCodOpcional)) || {
+                nome: nomeAluno,
+                turma: formatarTurmaAudit(turmaCodOpcional),
+                turmaCod: extrairCodTurmaAudit(turmaCodOpcional),
+                meuTrabalhoCod: "SEM-BANCADA",
+                meuTrabalhoTema: "Avaliador(a) sem apresentação vinculada"
+            };
+            const avaliacoes = obterAvaliacoesDoEstudanteAudit(cadastro);
 
-            if (tit) tit.innerHTML = `👤 Avaliações Feitas por: <strong>${nomeAluno}</strong>`;
-            if (subtit && cadastro) {
+            if (tit) tit.innerHTML = `👤 Avaliações Feitas por: <strong>${cadastro.nome}</strong>`;
+            if (subtit) {
                 subtit.innerHTML = `Turma: <strong>${cadastro.turma}</strong> • Bancada de Origem: <strong>${cadastro.meuTrabalhoCod} - ${cadastro.meuTrabalhoTema}</strong> • Total Avaliados: <strong>${avaliacoes.length} de 8 mínimos</strong>`;
             }
 
@@ -22243,18 +22499,18 @@ window.DADOS_TRABALHOS = DADOS_TRABALHOS;
         }
 
         function exportarMetasEstudantesCSV() {
-            const todosAlunos = obterTodosEstudantesMargot();
+            const todosAlunos = obterTodosEstudantesParaAuditoria();
             let csv = "Turma;Estudante_Nome;Papel_Pesquisa;Bancada_Origem_Cod;Bancada_Origem_Tema;Total_Trabalhos_Avaliados;Meta_8_Atingida;Projetos_Avaliados_Codigos\n";
 
             todosAlunos.forEach(aluno => {
-                const avaliacoes = avaliacoesBancaDiscentes.filter(av => av.avaliadorNome === aluno.nome);
+                const avaliacoes = obterAvaliacoesDoEstudanteAudit(aluno);
                 const total = avaliacoes.length;
                 const atingiu = total >= 8 ? "SIM" : "NAO";
                 const codigos = avaliacoes.map(a => a.projetoAvaliadoCod).join(", ");
 
                 const linha = [
                     `"${aluno.turma}"`,
-                    `"${aluno.nome}"`,
+                    `"${aluno.nome.replace(/"/g, '""')}"`,
                     `"${aluno.papel}"`,
                     `"${aluno.meuTrabalhoCod}"`,
                     `"${(aluno.meuTrabalhoTema || '').replace(/"/g, '""')}"`,
